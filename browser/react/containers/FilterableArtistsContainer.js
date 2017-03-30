@@ -9,12 +9,12 @@ export default class FilterableArtistsContainer extends React.Component{
     this.state = {
       inputValue: ''
     };
+    this.collectInput = this.collectInput.bind(this);
   }
 
   collectInput(evt){
     const value = evt.target.value;
-    console.log('value', value);
-    console.log('evt', evt);
+  
     this.setState({ inputValue: value});
   }
 
