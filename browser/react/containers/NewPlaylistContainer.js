@@ -6,7 +6,8 @@ export default class NewPlaylistContainer extends React.Component{
  	super(props);
 
  	this.state = {
- 		inputValue:""
+ 		inputValue: '',
+		handleButton: true
  	};
  	this.collectInput = this.collectInput.bind(this);
  	this.handleSubmit = this.handleSubmit.bind(this);
@@ -14,28 +15,30 @@ export default class NewPlaylistContainer extends React.Component{
 
 collectInput(evt){
     const value = evt.target.value;
-    // console.log('value', value);
-    // console.log('evt', evt);
+		let len = this.state.inputValue.length;
     this.setState({ inputValue: value});
+		if(len) this.setState({ handleButton: false });
+		if(len > 16) this.setState({ handleButton: true });
   }
 
 handleSubmit(e){
 	e.preventDefault();
-	//const value = e.target.value;
-	//this.setState({ inputValue: value});
-	console.log("WE HAVE UPDATED THE STATE AS", this.state.inputValue);
+	console.log('WE HAVE UPDATED THE STATE AS', this.state.inputValue);
+	this.setState({ inputValue: '', handleButton: true });
 }
 
 render(){
 	return(
 		<div>
-			<NewPlaylist collectInput={this.collectInput} handleSubmit={this.handleSubmit}/>
+			<NewPlaylist
+			collectInput={this.collectInput}
+			handleSubmit={this.handleSubmit}
+			inputValue={this.state.inputValue}
+			handleButton={this.state.handleButton}
+			/>
 		</div>
-		)
+		);
 }
-
-
-
 
 
 }
