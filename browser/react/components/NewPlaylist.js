@@ -12,6 +12,7 @@ const NewPlaylist = function (props) {
 		        <div className="col-xs-10">
 							<div className={props.alertClass}>{props.warningMessage}
 								<input
+										name="playlist"
 										className="form-control"
 										type="text"
 										onChange={props.collectInput}

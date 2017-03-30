@@ -1,5 +1,6 @@
 import React from 'react';
 import NewPlaylist from '../components/NewPlaylist';
+import axios from 'axios';
 
 export default class NewPlaylistContainer extends React.Component{
  constructor(props){
@@ -15,6 +16,17 @@ export default class NewPlaylistContainer extends React.Component{
  	this.handleSubmit = this.handleSubmit.bind(this);
  }
 
+// componentDidMount(){
+// 	let state = this.state.inputValue
+// 	console.log("PROPS CONTENT", this.props)
+// 	axios.post('/api/playlists', {content: "boop"})
+// 	  .then(res => res.data)
+// 	  .then(result => {
+// 	    console.log("HERE ARE THE RESULTS", result) // response json from the server!
+// 	  });
+// }
+
+
 collectInput(evt){
     const value = evt.target.value;
     this.setState({ inputValue: value},
@@ -29,9 +41,19 @@ collectInput(evt){
 		);
   }
 
+ createPlaylist(evt){
+ 	console.log("WHAT WE LOOK FOR", this.state.inputValue)
+ 	axios.post('/api/playlists', {name: this.state.inputValue})
+	  .then(res => res.data)
+	  .then(result => {
+	    console.log("HERE ARE THE RESULTS", result) // response json from the server!
+	  })
+}
+
 handleSubmit(e){
 	e.preventDefault();
 	console.log('WE HAVE UPDATED THE STATE AS', this.state.inputValue);
+	this.createPlaylist(e)
 	this.setState({ inputValue: '', handleButton: true });
 }
 
@@ -45,6 +67,7 @@ render(){
 			handleButton={this.state.handleButton}
 			warningMessage={this.state.warningMessage}
 			alertClass={this.state.alertClass}
+			createPlaylist={this.createPlaylist}
 			/>
 		</div>
 		);
