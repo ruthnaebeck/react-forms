@@ -2,7 +2,6 @@ import React from 'react';
 
 const NewPlaylist = function (props) {
 	const handleSubmit = props.handleSubmit;
-	// let handleButton = disabled;
 	return (
 		<div className="well">
 		  <form className="form-horizontal" onSubmit={handleSubmit}>
@@ -11,12 +10,14 @@ const NewPlaylist = function (props) {
 		      <div className="form-group">
 		        <label className="col-xs-2 control-label">Name</label>
 		        <div className="col-xs-10">
-		          <input
-									className="form-control"
-									type="text"
-									onChange={props.collectInput}
-									value={props.inputValue}
-									/>
+							<div className={props.alertClass}>{props.warningMessage}
+								<input
+										className="form-control"
+										type="text"
+										onChange={props.collectInput}
+										value={props.inputValue}
+										/>
+								</div>
 		        </div>
 		      </div>
 		      <div className="form-group">
@@ -31,7 +32,7 @@ const NewPlaylist = function (props) {
 		    </fieldset>
 		  </form>
 		</div>
-)}
+);};
 
 
 export default NewPlaylist;

@@ -7,7 +7,9 @@ export default class NewPlaylistContainer extends React.Component{
 
  	this.state = {
  		inputValue: '',
-		handleButton: true
+		handleButton: true,
+		warningMessage: '',
+		alertClass: ''
  	};
  	this.collectInput = this.collectInput.bind(this);
  	this.handleSubmit = this.handleSubmit.bind(this);
@@ -15,10 +17,16 @@ export default class NewPlaylistContainer extends React.Component{
 
 collectInput(evt){
     const value = evt.target.value;
-		let len = this.state.inputValue.length;
-    this.setState({ inputValue: value});
-		if(len) this.setState({ handleButton: false });
-		if(len > 16) this.setState({ handleButton: true });
+    this.setState({ inputValue: value},
+			() => {
+				let len = this.state.inputValue.length;
+				// console.log('len2', len, 'val', this.state.inputValue);
+				if(len > 0 && len < 17) this.setState({ handleButton: false, alertClass: '', warningMessage: '' });
+				if (len > 16) this.setState({ handleButton: true, alertClass: 'alert alert-warning', warningMessage: 'Please enter a name less than 17 characters' });
+				if(len === 0) this.setState({ handleButton: true, alertClass: 'alert alert-warning', warningMessage: 'Please enter a name' });
+			}
+
+		);
   }
 
 handleSubmit(e){
@@ -35,6 +43,8 @@ render(){
 			handleSubmit={this.handleSubmit}
 			inputValue={this.state.inputValue}
 			handleButton={this.state.handleButton}
+			warningMessage={this.state.warningMessage}
+			alertClass={this.state.alertClass}
 			/>
 		</div>
 		);
